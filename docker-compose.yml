@@ -1,0 +1,44 @@
+# docker-compose build
+version: '3.8'
+volumes:
+  postgis-data:
+  geoserver-data:
+
+services:
+  psqlbase:
+    build: ./docker/db/psqlimg
+    image: psqlimg:latest
+  
+  pwdb:
+    build: ./docker/db
+    image: pwgisdb:latest
+    container_name: pwgis-db
+    volumes:
+      - postgis-data:/var/lib/postgresql
+    env_file:
+      - ./docker/db/.env
+    ports:
+      - 25432:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
+    
+  pwgeoserver:
+    build: ./docker/sdi
+    image: pwgisgeosrver:latest
+    container_name: pwgis-geoserver
+    volumes:
+      - geoserver-data:/opt/geoserver/data_dir
+    ports:
+      - "8686:8080"
+      - "8787:8443"
+    restart: on-failure
+    env_file:
+      - ./docker/sdi/.env
+    depends_on:
+      - pwdb
+    healthcheck:
+      test: curl --fail -s http://localhost:8080/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
