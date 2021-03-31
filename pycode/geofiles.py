@@ -36,6 +36,13 @@ def drv_name(_file):
     return str(drv[os.path.splitext(_file)[1]])
 
 
+def grs_rst_drv():
+    return {
+        '.tif': 'GTiff',
+        '.img': 'HFA'
+    }
+
+
 def list_esri_shp(datafolder):
     """
     List ESRI Shapefiles in Folder
