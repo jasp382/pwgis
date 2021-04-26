@@ -33,6 +33,37 @@ def execmd(cmd):
         return out.decode('utf-8')
 
 
+def mkdir(folder, randName=None, overwrite=True):
+    """
+    Create a new folder
+    Replace the given folder if that one exists
+    """
+    
+    if randName:
+        import random
+        chars = '0123456789qwertyuiopasdfghjklzxcvbnm'
+        
+        name = ''
+        for i in range(10):
+            name+=random.choice(chars)
+        
+        folder = os.path.join(folder, name)
+    
+    if os.path.exists(folder):
+        if overwrite:
+            import shutil
+            
+            shutil.rmtree(folder)
+        else:
+            raise ValueError(
+                "{} already exists".format(folder)
+            )
+    
+    os.mkdir(folder)
+    
+    return folder
+
+
 def del_folder(folder):
     """
     Delete folder if exists

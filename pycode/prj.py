@@ -30,3 +30,12 @@ def get_shp_sref(shp):
     
     return spref
 
+
+def epsg_to_wkt(epsg):
+    from osgeo import osr
+
+    s = osr.SpatialReference()
+    s.ImportFromEPSG(epsg)
+    
+    return s.ExportToWkt()
+

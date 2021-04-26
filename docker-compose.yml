@@ -25,7 +25,7 @@ services:
     
   pwgeoserver:
     build: ./docker/sdi
-    image: pwgisgeosrver:latest
+    image: pwgisgeoserver:latest
     container_name: pwgis-geoserver
     volumes:
       - geoserver-data:/opt/geoserver/data_dir
