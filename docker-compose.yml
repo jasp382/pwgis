@@ -29,6 +29,7 @@ services:
     container_name: pwgis-geoserver
     volumes:
       - geoserver-data:/opt/geoserver/data_dir
+      - /home/useriam/pwgis/geodata/geoserver:/home/geoserveruser
     ports:
       - "8686:8080"
       - "8787:8443"

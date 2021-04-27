@@ -131,8 +131,8 @@ STATICFILES_DIRS = [
 ]
 
 GEOSERVER_CON = {
-    'HOST' : 'localhost',
-    'PORT' : '8080',
-    'USER' : 'admin',
-    'PASSWORD' : 'geoserver'
+    'HOST'     : '192.168.1.96',
+    'PORT'     : '8686',
+    'USER'     : 'pwgisuser',
+    'PASSWORD' : 'gosjfdiohvdjdgirkdsafd'
 }

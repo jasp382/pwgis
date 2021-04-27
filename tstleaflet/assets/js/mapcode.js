@@ -11,19 +11,19 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mymap);
 
 // Add DEM WMS
-var wms_url = '/api/wms/aula29?';
+var wms_url = '/api/wms/pwgis?';
 
 var wmsLayer = L.tileLayer.wms(wms_url, {
     layers : 'dem_coimbra',
     format : 'image/png',
     transparent: true,
-    styles : 'dem_sld'
+    styles : 'dem_style'
 });
 
 mymap.addLayer(wmsLayer);
 
 // Get and Set Map Extent
-var url_extent = '/api/extent/aula29/dem_coimbra/';
+var url_extent = '/api/extent/pwgis/dem_coimbra/';
 var extent = undefined;
 
 $(document).ready(function () {
@@ -40,7 +40,7 @@ $(document).ready(function () {
 });
 
 // Add Point Layer
-var url_lyr = '/api/wfs/aula29/osm_points/?count=1000';
+var url_lyr = '/api/wfs/pwgis/osm_points/?count=1000';
 
 // Auxiliary functions
 function popupStringBasedLayerFeatures(feat) {
@@ -100,8 +100,8 @@ $(document).ready(function () {
 });
 
 // Add Roads using filter
-var motorway_url = '/api/wfs/aula29/osm_roads/?val=motorway&attr=highway',
-    primary_url  = '/api/wfs/aula29/osm_roads/?val=primary&attr=highway';
+var motorway_url = '/api/wfs/pwgis/osm_roads/?val=motorway&attr=highway',
+    primary_url  = '/api/wfs/pwgis/osm_roads/?val=primary&attr=highway';
 
 function get_color (d) {
     return d === 'motorway' ? 'black' : 'blue';
@@ -138,12 +138,12 @@ $(document).ready(function () {
 });
 
 // Get Feature Info
-var mdtinfo = '/api/featinfo/aula29/dem_coimbra/';
+var mdtinfo = '/api/featinfo/pwgis/dem_coimbra/';
 
 mymap.on('click', function (event) {
 	var clickPnt = mymap.latLngToContainerPoint(event.latlng, mymap.getZoom()),
 		size     = mymap.getSize(),
-		mdtinfo  = '/api/featinfo/aula29/dem_coimbra/?WIDTH=' + String(size.x) +
+		mdtinfo  = '/api/featinfo/pwgis/dem_coimbra/?WIDTH=' + String(size.x) +
 			'&HEIGHT=' + String(size.y) + '&X=' + String(clickPnt.x) +
 			'&Y=' + String(clickPnt.y) +
 			'&BBOX=' + String(mymap.getBounds().toBBoxString());
