@@ -75,6 +75,59 @@ def del_folder(folder):
         shutil.rmtree(folder)
 
 
+def lst_ff(w, file_format=None, filename=None, rfilename=None):
+    """
+    List the abs path of all files with a specific extension on a folder
+    """
+    
+    from pycode import obj_to_lst
+    
+    # Prepare file format list
+    if file_format:
+        formats = obj_to_lst(file_format)
+        
+        for f in range(len(formats)):
+            if formats[f][0] != '.':
+                formats[f] = '.' + formats[f]
+    
+    # List files
+    r = []
+    for (d, _d_, f) in os.walk(w):
+        r.extend(f)
+        break
+    
+    # Filter files by format or not
+    if not file_format:
+        if not rfilename:
+            t = [os.path.join(w, i) for i in r]
+        else:
+            t = [i for i in r]
+    
+    else:
+        if not rfilename:
+            t = [
+                os.path.join(w, i) for i in r
+                if os.path.splitext(i)[1] in formats
+            ]
+        else:
+            t = [i for i in r if os.path.splitext(i)[1] in formats]
+    
+    # Filter by filename
+    if not filename:
+        return t
+    
+    else:
+        filename = obj_to_lst(filename)
+        
+        _t = []
+        for i in t:
+            fn = fprop(i, 'fn') if not rfilename else i
+            if fn in filename:
+                _t.append(i)
+        
+        return _t
+
+
 def lst_fld(w, name=None):
     """
     List folders path or name in one folder

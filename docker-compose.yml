@@ -18,7 +18,7 @@ services:
     env_file:
       - ./docker/db/.env
     ports:
-      - 25432:5432
+      - 5432:5432
     restart: on-failure
     healthcheck:
       test: "exit 0"
@@ -29,7 +29,7 @@ services:
     container_name: pwgis-geoserver
     volumes:
       - geoserver-data:/opt/geoserver/data_dir
-      - /home/useriam/pwgis/geodata/geoserver:/home/geoserveruser
+      - ./:/home/geoserveruser
     ports:
       - "8686:8080"
       - "8787:8443"

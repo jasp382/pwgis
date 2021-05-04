@@ -1,4 +1,50 @@
 """
+File Format Properties
+"""
+
+def vector_formats():
+    return [
+        '.shp', '.gml', '.json', '.geojson', '.kml',
+        '.osm', '.pbf', '.dbf', '.vct', '.nc', '.vrt',
+        '.sqlite', '.gdb'
+    ]
+
+
+def raster_formats():
+    return [
+        '.tiff', '.tif', '.img', '.nc', 'ecw', '.jpg', '.png', '.vrt', '.jp2',
+        '.asc'
+    ]
+
+
+def check_isRaster(_file):
+    from pycode.oss import fprop
+
+    rst_lst = raster_formats()
+    
+    file_ext = fprop(_file, 'ff')
+    
+    if file_ext not in rst_lst:
+        return None
+    else:
+        return True
+
+
+def check_isShp(_file):
+    from pycode.oss import fprop
+    
+    lst = vector_formats()
+    
+    file_ext = fprop(_file, 'ff')
+    
+    if file_ext not in lst:
+        return None
+    else:
+        return True
+
+
+
+"""
 Deal with Geospatial Files
 """
 

@@ -106,3 +106,45 @@ def tbl_to_obj(tblFile, sheet=None, useFirstColAsIndex=None,
         tableDf = tableDf.to_dict(orient=orientation)
     
     return tableDf
+
+
+def imgsrc_to_num(img, flatten=None, with_nodata=True):
+    """
+    Convert Raster Source to Numpy Array
+    """
+
+    import numpy as np
+
+    if not flatten and with_nodata:
+        return img.ReadAsArray()
+    elif flatten and with_nodata:
+        return img.ReadAsArray().flatten()
+    elif flatten and not with_nodata:
+        bnd = img.GetRasterBand(1)
+        no_val = bnd.GetNoDataValue()
+        values = img.ReadAsArray().flatten()
+
+        return np.delete(values, np.where(values==no_val), None)
+    else:
+        bnd = img.GetRasterBand(1)
+        no_val = bnd.GetNoDataValue()
+        values = img.ReadAsArray()
+
+        return np.delete(values, np.where(values==no_val), None)
+
+
+def rst_to_array(r, flatten=False, with_nodata=True):
+    """
+    Convert Raster image to numpy array
+    
+    If flatten equal a True, the output will have a shape of (1, 1).
+    
+    If with_nodata equal a True, the output will have the nodata values
+    """
+    
+    from osgeo import gdal
+    
+    img = gdal.Open(r)
+
+    return imgsrc_to_num(img, flatten=flatten, with_nodata=with_nodata)
+
