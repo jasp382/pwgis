@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Landslide Susceptibility Service</title>
+</head>
+<body>
+	<h1>Service to create Landslide Susceptibility maps</h1>
+	<br>
+	<h3>Please fulfill the following form to generate a new susceptibility map</h3>
+	
+	<form id="risk-inputs-form" method="POST" enctype="multipart/form-data"
+		action="/map-prod/">
+		{% csrf_token %}
+		<div>
+			<div>
+				<b>{{ risk_form.landslides.label }}</b>
+			</div>
+            <br>
+			<div>
+				{{ risk_form.landslides }}
+			</div>
+		</div>
+        <br><br>
+		<div>
+			<div>
+				<b>{{ risk_form.variables.label }}</b>
+			</div>
+            <br>
+			<div>
+				{{ risk_form.variables }}
+			</div>
+		</div>
+        <br><br><br>
+		
+		<input type="submit" value="Create map">
+	</form>
+</body>
+</html>
